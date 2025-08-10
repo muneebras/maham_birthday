@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Maham</title>
+<style>
+    body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .screen {
+        display: none;
+        padding: 20px;
+    }
+    .active {
+        display: block;
+    }
+    h1, h2 {
+        font-weight: bold;
+    }
+    input, button {
+        font-size: 18px;
+        padding: 10px;
+        margin-top: 20px;
+    }
+    button {
+        background-color: white;
+        color: black;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: gray;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<audio id="bg-music" loop>
+    <source src="bg.mp3" type="audio/mpeg">
+</audio>
+
+<div id="screen1" class="screen active">
+    <h1>Hello, Maham! ❤️</h1>
+    <p>How are you? Before we do anything, give me some correct answers.</p>
+    <button onclick="startQuestions()">Ok, I will</button>
+</div>
+
+<div id="screen2" class="screen">
+    <h2 id="question-text"></h2>
+    <input type="text" id="answer-input" placeholder="Type your answer">
+    <br>
+    <button id="submit-answer" onclick="checkAnswer()">Submit</button>
+    <p id="feedback"></p>
+</div>
+
+<div id="screen3" class="screen">
+    <h2>We enter our quest here! 🗺️</h2>
+    <p>You have to collect the alphabets by going to each of the following places in order:</p>
+    <ol style="text-align:left; display:inline-block;">
+        <li><a href="https://www.google.com/maps/place/POMO+Neapolitan+Pizzeria/data=!4m2!3m1!1s0x3eb33d8d7e929479:0x227438e6d6f44f8e?sa=X&ved=1t:242&ictx=111" target="_blank">POMO</a></li>
+        <li><a href="https://www.google.com/maps/place/JUNE/@24.7957463,67.0625357,764m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3eb33d9e1c4905db:0xf586d0118023e35e!8m2!3d24.7957415!4d67.0651106!16s%2Fg%2F11kr8xlt20?entry=ttu&g_ep=EgoyMDI1MDgwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank">June</a></li>
+        <li><a href="https://www.google.com/maps/place/McDonald's/@24.7950594,67.0355444,5166m/data=!3m1!1e3!4m14!1m7!3m6!1s0x3eb33d9e1c4905db:0xf586d0118023e35e!2sJUNE!8m2!3d24.7957415!4d67.0651106!16s%2Fg%2F11kr8xlt20!3m5!1s0x3eb33d0f608c13a5:0xa917b5c52ad92c0c!8m2!3d24.7985777!4d67.0343253!16s%2Fg%2F1tdy2z3c?entry=ttu&g_ep=EgoyMDI1MDgwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank">McDonald's</a></li>
+        <li><a href="https://www.google.com/maps/place/Gulshan+Sweets+%26+Bakery/@24.8416848,67.0568071,62m/data=!3m1!1e3!4m6!3m5!1s0x3eb33c3014af6d57:0xda6322707444ea15!8m2!3d24.8417363!4d67.0571153!16s%2Fg%2F11dxf0zljg?entry=ttu&g_ep=EgoyMDI1MDgwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank">Tropik</a></li>
+    </ol>
+    <br>
+    <button onclick="goToPassword()">Yes, I have the password</button>
+</div>
+
+<div id="screen4" class="screen">
+    <h2>Enter the 4-letter password to register for your gift 🎁</h2>
+    <input type="text" id="password-input" placeholder="Password">
+    <br>
+    <button onclick="checkPassword()">Submit Password</button>
+    <p id="password-feedback"></p>
+</div>
+
+<div id="screen5" class="screen">
+    <h1>🎉 Happy Birthday my dear Maham! 🎉</h1>
+    <p>You have successfully registered for your birthday gift ❤️</p>
+</div>
+
+<script>
+let questions = [
+    {q: "Who is the prettiest of all?", a: "maham"},
+    {q: "Who is the sexiest of all?", a: "maham"},
+    {q: "Who belongs to Muneeb?", a: "maham"}
+];
+let currentQ = 0;
+
+function startQuestions() {
+    document.getElementById('screen1').classList.remove('active');
+    document.getElementById('screen2').classList.add('active');
+    document.getElementById('bg-music').play();
+    showQuestion();
+}
+
+function showQuestion() {
+    document.getElementById('question-text').textContent = questions[currentQ].q;
+    document.getElementById('answer-input').value = "";
+    document.getElementById('feedback').textContent = "";
+    document.getElementById('submit-answer').style.display = "inline-block";
+}
+
+function checkAnswer() {
+    let ans = document.getElementById('answer-input').value.trim().toLowerCase();
+    if (ans === questions[currentQ].a) {
+        document.getElementById('feedback').textContent = "Hurray! Let's go to another question.";
+        document.getElementById('submit-answer').style.display = "none";
+        setTimeout(() => {
+            currentQ++;
+            if (currentQ < questions.length) {
+                showQuestion();
+            } else {
+                document.getElementById('screen2').classList.remove('active');
+                document.getElementById('screen3').classList.add('active');
+            }
+        }, 3000);
+    } else {
+        document.getElementById('feedback').textContent = "Think more, big brain!";
+    }
+}
+
+function goToPassword() {
+    document.getElementById('screen3').classList.remove('active');
+    document.getElementById('screen4').classList.add('active');
+}
+
+function checkPassword() {
+    let pwd = document.getElementById('password-input').value.trim().toLowerCase();
+    if (pwd === "mrhb") {
+        document.getElementById('screen4').classList.remove('active');
+        document.getElementById('screen5').classList.add('active');
+    } else {
+        document.getElementById('password-feedback').textContent = "Wrong password!";
+    }
+}
+</script>
+
+</body>
+</html>
